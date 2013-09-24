@@ -13,36 +13,49 @@
     @media (max-width: 600px)  { @content; }
   }
 }
-section {
-	background: #2497dd;
-	padding: $padding;
+
+body {
+/*  max-width: $maxWidth;
+  margin: 0 auto;*/
 }
+
 .grid {
 	background: yellow;
 }
+
 p {
   color: #fff;
   font-family: helvetica;
   display: block;
   text-align: center;
-
 }
 
-.nested section {
-  background: #e74c3c;
+.col-item {
+  background: #ccc;
 }
 
-/*Column Mixin example*/
+.two {
+  @include col-2;
+  letter-spacing:normal;
+  word-spacing:normal;
+}
+.three {
+  @include col-3;
+  letter-spacing:normal;
+  word-spacing:normal;
+}
+.four {
+  @include col-4;
+  letter-spacing:normal;
+  word-spacing:normal;
 
-/*@include breakpoint(br-2) {
-
-  .col-2 {
-    @include col-1;
-  }
-  .col-4 {
+  @include breakpoint(br-2) {
     @include col-2;
   }
-  .col-6 {
-    @include col-3;
-  }
-}*/
+}
+
+.six {
+  @include col-6;
+  letter-spacing:normal;
+  word-spacing:normal;
+}
