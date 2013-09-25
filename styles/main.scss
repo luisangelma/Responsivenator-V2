@@ -27,35 +27,27 @@ p {
   color: #fff;
   font-family: helvetica;
   display: block;
-  text-align: center;
+  text-align: left;
 }
 
 .col-item {
   background: #ccc;
 }
 
-.two {
+.feed {
   @include col-2;
-  letter-spacing:normal;
-  word-spacing:normal;
-}
-.three {
-  @include col-3;
-  letter-spacing:normal;
-  word-spacing:normal;
-}
-.four {
-  @include col-4;
-  letter-spacing:normal;
-  word-spacing:normal;
+  background: #ccc;
 
-  @include breakpoint(br-2) {
-    @include col-2;
+  .two {
+    @include col-2();
   }
 }
 
-.six {
-  @include col-6;
-  letter-spacing:normal;
-  word-spacing:normal;
+.nested {
+  @include col-2;
+  background: #ccc;
+
+  .two {
+    @include col-2();
+  }
 }
