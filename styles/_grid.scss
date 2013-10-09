@@ -18,15 +18,17 @@ $gridWidth: 96%;/*Total width for grid*/
 $maxWidth: 1400px;/*Max width for grid*/
 $minWidth: 300px;/*Min width for grid*/
 $width: 100%;/*Total width for columns*/
+$gridColumns: 12; /*Total number of columns*/
 $colGutter: 1.5%;/*Column gutter left/right*/
 $colMarginGrid: $colGutter*2;/*Space to be subtracted from the column width, needed to apply margins*/
 $colMarginBottom: 25px;/*Margin bottom applied to columns*/
 $totalColMargin: 0 $colGutter $colMarginBottom $colGutter;/*Column margin*/
-$gridColumns: 12; /*Total number of columns*/
+
 
 
 /*  Grid  ========================================================*/
-.grid {
+
+@mixin grid {
   list-style: none;
   margin: 0 auto;
   padding: 0;
@@ -37,14 +39,16 @@ $gridColumns: 12; /*Total number of columns*/
 
 /*Opera fix*/
 
-.opera:-o-prefocus, .grid {
-    word-spacing: -0.43em;
-    letter-spacing: normal;
+@mixin grid-opera {
+    .opera:-o-prefocus, .grid {
+      word-spacing: -0.43em;
+      letter-spacing: normal;
+    }
 }
 
 /* Columns setup  ================================================*/
 
-@mixin columnSetup($setUp) {
+@mixin columnSetUp($setUp) {
     display: inline-block;
     vertical-align: top;
     margin: $totalColMargin;
@@ -67,26 +71,53 @@ $gridColumns: 12; /*Total number of columns*/
 @for $i from 1 through $gridColumns {
   .col-#{$i} {
     width: $width/($i) - $colMarginGrid;
-    @include columnSetup(column-level);
+    @include columnSetUp(column-level);
   }
 }
 
-
 /*Columns mixin without classes or to be included at breakpoints*/
 
-@mixin col-1  {width: $width/1 - $colMarginGrid; margin: $totalColMargin; @include columnSetup(column-level); }
-@mixin col-2  {width: $width/2 - $colMarginGrid; margin: $totalColMargin; @include columnSetup(column-level); }
-@mixin col-3  {width: $width/3 - $colMarginGrid; margin: $totalColMargin; @include columnSetup(column-level); }
-@mixin col-4  {width: $width/4 - $colMarginGrid; margin: $totalColMargin; @include columnSetup(column-level); }
-@mixin col-5  {width: $width/5 - $colMarginGrid; margin: $totalColMargin; @include columnSetup(column-level); }
-@mixin col-6  {width: $width/6 - $colMarginGrid; margin: $totalColMargin; @include columnSetup(column-level); }
-@mixin col-7  {width: $width/7 - $colMarginGrid; margin: $totalColMargin; @include columnSetup(column-level); }
-@mixin col-8  {width: $width/8 - $colMarginGrid; margin: $totalColMargin; @include columnSetup(column-level); }
-@mixin col-9  {width: $width/9 - $colMarginGrid; margin: $totalColMargin; @include columnSetup(column-level); }
-@mixin col-10 {width: $width/1 - $colMarginGrid; margin: $totalColMargin; @include columnSetup(column-level); }
-@mixin col-11 {width: $width/1 - $colMarginGrid; margin: $totalColMargin; @include columnSetup(column-level); }
-@mixin col-12 {width: $width/1 - $colMarginGrid; margin: $totalColMargin; @include columnSetup(column-level); }
+/*Mixin for columns*/
 
+@mixin col($columns) {
+
+  @include columnSetUp(column-level);
+
+  @for $i from 1 through 12 {
+    @if $columns == $i {
+      width: $width/$i - $colMarginGrid;
+      margin: $totalColMargin;
+    }
+  }
+}
+
+/*Mixin for nested columns*/
+
+@mixin nested-col($nested-columns) {
+
+  @include columnSetUp(grid-level);
+
+  @for $i from 1 through 12 {
+    @if $nested-columns == $i {
+      width: $width/$i - $colMarginGrid;
+      margin: $totalColMargin;
+    }
+  }
+}
+
+/*Mixin for nested columns (Opera v11 and under fix only)*/
+
+@mixin nested-col-opera($nested-columns-opera) {
+
+  @include columnSetUp(grid-level-opera);
+
+  @for $i from 1 through 12 {
+    @if $nested-columns-opera == $i {
+      width: $width/$i - $colMarginGrid;
+      margin: $totalColMargin;
+    }
+  } 
+}
 
 /*  Uneven Columns
 =================================================================*/

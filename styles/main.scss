@@ -14,13 +14,9 @@
   }
 }
 
-body {
-/*  max-width: $maxWidth;
-  margin: 0 auto;*/
-}
-
-.grid {
+.wrapper {
 	background: yellow;
+  @include grid();
 }
 
 p {
@@ -30,24 +26,18 @@ p {
   text-align: left;
 }
 
-.col-item {
+.feed, .nested {
   background: #ccc;
+  @include col(2);
 }
 
-.feed {
-  @include col-2;
+.one, .two, .three, .four {
   background: #ccc;
+  @include col(4);
 
-  .two {
-    @include col-2();
+  @include breakpoint(br-3) {
+    @include col(1);
   }
+  
 }
 
-.nested {
-  @include col-2;
-  background: #ccc;
-
-  .two {
-    @include col-2();
-  }
-}
