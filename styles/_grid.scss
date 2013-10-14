@@ -3,7 +3,7 @@ Responsivenator: v2.00;
 Author: Luisangel Marquez @lma_90;
 */
 
-*  {
+*, *:before, *:after  {
   @include box-sizing(border-box);
 }
 
@@ -18,13 +18,11 @@ $gridWidth: 96%;/*Total width for grid*/
 $maxWidth: 1400px;/*Max width for grid*/
 $minWidth: 300px;/*Min width for grid*/
 $width: 100%;/*Total width for columns*/
-$gridColumns: 12; /*Total number of columns*/
-$colGutter: 1.5%;/*Column gutter left/right*/
-$colMarginGrid: $colGutter*2;/*Space to be subtracted from the column width, needed to apply margins*/
-$colMarginBottom: 25px;/*Margin bottom applied to columns*/
-$totalColMargin: 0 $colGutter $colMarginBottom $colGutter;/*Column margin*/
-
-
+$totalColumns: 12; /*Total number of columns*/
+$columnGutter: 1.5%;/*Column gutter left/right*/
+$columnMargin: $columnGutter*2;/*Column gutter left/right*/
+$columnMarginBottom: 25px;/*Margin bottom applied to columns*/
+$totalColumnMargin: 0 $columnGutter $columnMarginBottom $columnGutter;/*Column margin*/
 
 /*  Grid  ========================================================*/
 
@@ -32,9 +30,20 @@ $totalColMargin: 0 $colGutter $colMarginBottom $colGutter;/*Column margin*/
   list-style: none;
   margin: 0 auto;
   padding: 0;
+  width: $width;
+  height: auto;
   max-width: $maxWidth;
-  display: block;
-  letter-spacing: -0.31em;
+  letter-spacing: -0.26em;
+  font-size: 0;
+
+  &:before,
+  &:after {
+      content:"";
+      display:table;
+  }
+  &:after {
+      clear:both;
+  }
 }
 
 /*Opera fix*/
@@ -51,7 +60,7 @@ $totalColMargin: 0 $colGutter $colMarginBottom $colGutter;/*Column margin*/
 @mixin columnSetUp($setUp) {
     display: inline-block;
     vertical-align: top;
-    margin: $totalColMargin;
+    font-size: 16px;
 
     @if $setUp ==  grid-level {
       letter-spacing: -0.43em;
@@ -67,67 +76,75 @@ $totalColMargin: 0 $colGutter $colMarginBottom $colGutter;/*Column margin*/
 }
 
 /*Column Loop with Classes*/
-
-@for $i from 1 through $gridColumns {
+/*
+@for $i from 1 through $totalColumns {
   .col-#{$i} {
-    width: $width/($i) - $colMarginGrid;
+    width: $width/($i) - $columnMargin;
     @include columnSetUp(column-level);
   }
-}
+}*/
 
 /*Columns mixin without classes or to be included at breakpoints*/
 
 /*Mixin for columns*/
 
-@mixin col($columns) {
+@mixin col($columns, $margin: $columnMargin, $setUp: 'column-level') {
+  
+  @if $setUp == grid-level {
+      @include columnSetUp(grid-level);
+  }
+  @else if $setUp == column-level {
+      @include columnSetUp(column-level);
+  }
+  
+  @else if $setUp == grid-level-opera {
+      @include columnSetUp(grid-level-opera);
+  }
+  
+  @else if $margin == $columnMargin {
+      width: $width/$i - $margin;
+  }
 
-  @include columnSetUp(column-level);
-
-  @for $i from 1 through 12 {
+  @for $i from 1 through $totalColumns {
     @if $columns == $i {
-      width: $width/$i - $colMarginGrid;
-      margin: $totalColMargin;
+      position: relative;
+      width: $width/$i - $margin;
+      margin: 0 $margin/2 $columnMarginBottom $margin/2;
     }
   }
 }
 
-/*Mixin for nested columns*/
 
-@mixin nested-col($nested-columns) {
-
-  @include columnSetUp(grid-level);
-
-  @for $i from 1 through 12 {
-    @if $nested-columns == $i {
-      width: $width/$i - $colMarginGrid;
-      margin: $totalColMargin;
-    }
+@mixin origin($direction: 'positive', $columns: '$totalColumns', $columnsInRow: '$x') {
+  
+  @if $direction == positive {
+      $direction: #{'+'};
   }
-}
+  @else if $direction == negative {
+      $direction: #{'-'};
+  }
 
-/*Mixin for nested columns (Opera v11 and under fix only)*/
+  @for $i from 1 through $totalColumns {
 
-@mixin nested-col-opera($nested-columns-opera) {
-
-  @include columnSetUp(grid-level-opera);
-
-  @for $i from 1 through 12 {
-    @if $nested-columns-opera == $i {
-      width: $width/$i - $colMarginGrid;
-      margin: $totalColMargin;
+    @if $columns == $i {
+      $origin-index: $width/$i;
+      left: #{$direction}#{$origin-index*$columnsInRow};
     }
   } 
 }
 
+
+
+
 /*  Uneven Columns
 =================================================================*/
-@mixin col-2-12  { width: 60% - $colMarginGrid;}
-@mixin col-3-12  { width: 66.66666666666667% - $colMarginGrid;}
-@mixin col-4-12  { width: 75% - $colMarginGrid; }
-@mixin col-6-12  { width: 83.33333333333333% - $colMarginGrid; }
-@mixin col-8-12  { width: 87.50% - $colMarginGrid; }
-@mixin col-10-12 { width: 90% - $colMarginGrid; }
-@mixin col-12-12 { width: 91.6% - $colMarginGrid;}
+/*@mixin col-2-12  { width: 60% - $columnMargin;}
+@mixin col-3-12  { width: 66.66666666666667% - $columnMargin;}
+@mixin col-4-12  { width: 75% - $columnMargin; }
+@mixin col-6-12  { width: 83.33333333333333% - $columnMargin; }
+@mixin col-8-12  { width: 87.50% - $columnMargin; }
+@mixin col-10-12 { width: 90% - $columnMargin; }
+@mixin col-12-12 { width: 91.6% - $columnMargin;}
 
 .col-2-12  { @include col-2-12  }
 .col-3-12  { @include col-3-12  }
@@ -135,4 +152,4 @@ $totalColMargin: 0 $colGutter $colMarginBottom $colGutter;/*Column margin*/
 .col-6-12  { @include col-6-12  }
 .col-8-12  { @include col-6-12  }
 .col-10-12 { @include col-8-12  }
-.col-12-12 { @include col-12-12 }
+.col-12-12 { @include col-12-12 }*/

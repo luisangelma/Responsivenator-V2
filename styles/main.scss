@@ -2,6 +2,12 @@
 @import "compass/css3";
 @import "_grid.scss";
 
+/*Colors*/
+
+$green: #3cd27b;
+$blue: #3498db;
+
+
 @mixin breakpoint($point) {
   @if $point == br-1 {
     @media (max-width: 1100px) { @content; }
@@ -14,30 +20,131 @@
   }
 }
 
+@mixin increase-color($color, $iterations, $darken) {
+  
+  @for $i from 1 through $iterations {
+    &:nth-child(#{$i+1}) {
+      $increase-color: $i * $darken;
+      background: darken($color, $increase-color);
+    }
+  }
+}
+
+
 .wrapper {
-	background: yellow;
   @include grid();
+  background: none;
+  margin: 100px auto;
 }
 
 p {
+  text-align: center;
   color: #fff;
   font-family: helvetica;
-  display: block;
-  text-align: left;
+  font-size: 2em;
+  line-height: 1em;
+
 }
 
-.feed, .nested {
-  background: #ccc;
+div {
+  height: 6em;
+  /*background: $green;*/
+  @include increase-color($green, 70, .5%)
+}
+
+.siete {
+  @include col(7);
+}
+.cinco {
+  @include col(3)
+}
+
+.one {
+  @include col(1);
+}
+.two {
   @include col(2);
+
+  &.dos {
+    @include col(2);
+  }
 }
+.three {
+  @include col(3)
+}
+.four {
+  @include col(4)
+}
+.five {
+  @include col(5);
 
-.one, .two, .three, .four {
-  background: #ccc;
-  @include col(4);
-
-  @include breakpoint(br-3) {
+  @include breakpoint(br-2) {
     @include col(1);
   }
-  
+
+  &:nth-of-type(5n+1) {
+    @include origin(positive, 5, 4);
+    background: cyan;
+    z-index: 20;
+
+    @include breakpoint(br-2) {
+      @include col(1);
+      @include origin(positive, 5, 0);
+    }
+  }
+  &:nth-of-type(5n+5) {
+    @include origin(negative, 5, 4);
+
+    @include breakpoint(br-2) {
+      @include col(1);
+       @include origin(positive, 5, 0);
+    }
+  }
+  &:nth-of-type(5n+2) {
+    @include origin(positive, 5, 1);
+
+    @include breakpoint(br-2) {
+      @include col(1);
+       @include origin(positive, 5, 0);
+    }
+  }
+
+  &:nth-of-type(5n+3) {
+    @include origin(negative, 5, 1);
+
+    @include breakpoint(br-2) {
+      @include col(1);
+      @include origin(positive, 5, 0);
+    }
+  }
+}
+.six {
+  @include col(6)
+}
+.seven {
+  @include col(7)
+}
+.eight {
+  @include col(8)
+}
+.nine {
+  @include col(9)
+}
+.ten {
+  @include col(10)
+}
+.twelve {
+  @include col(12)
 }
 
+
+
+.lt-ie8 div {
+  *display: inline;
+  zoom: 1;
+}
+
+.lt-ie8 .wrapper {
+  width: 960px;
+  max-width: 960px;
+}
