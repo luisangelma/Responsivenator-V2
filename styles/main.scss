@@ -48,7 +48,7 @@ p {
 
 div {
   height: 6em;
-  /*background: $green;*/
+  background: $green;
   @include increase-color($green, 70, .5%)
 }
 
@@ -65,76 +65,52 @@ div {
 .two {
   @include col(2);
 
-  &.dos {
-    @include col(2);
+  @include breakpoint(br-2) {
+    @include col(1, 50%);
   }
 }
 .three {
-  @include col(3)
+  @include col(3);
 }
 .four {
-  @include col(4)
+  @include col(4);
+
+  
+  &.first {
+    background: cyan;
+    @include col(2);
+  }
+  &.second {
+    @include col(6);
+  }
+  &.third {
+    @include col(6);
+  }
+  &.fourth {
+    @include col(6);
+  }
+  
 }
 .five {
   @include col(5);
-
-  @include breakpoint(br-2) {
-    @include col(1);
-  }
-
-  &:nth-of-type(5n+1) {
-    @include origin(positive, 5, 4);
-    background: cyan;
-    z-index: 20;
-
-    @include breakpoint(br-2) {
-      @include col(1);
-      @include origin(positive, 5, 0);
-    }
-  }
-  &:nth-of-type(5n+5) {
-    @include origin(negative, 5, 4);
-
-    @include breakpoint(br-2) {
-      @include col(1);
-       @include origin(positive, 5, 0);
-    }
-  }
-  &:nth-of-type(5n+2) {
-    @include origin(positive, 5, 1);
-
-    @include breakpoint(br-2) {
-      @include col(1);
-       @include origin(positive, 5, 0);
-    }
-  }
-
-  &:nth-of-type(5n+3) {
-    @include origin(negative, 5, 1);
-
-    @include breakpoint(br-2) {
-      @include col(1);
-      @include origin(positive, 5, 0);
-    }
-  }
 }
 .six {
-  @include col(6)
+  @include col(6);
 }
 .seven {
-  @include col(7)
+  @include col(7);
 }
 .eight {
-  @include col(8)
+  @include col(8);
 }
 .nine {
-  @include col(9)
+  @include col(9);
 }
 .ten {
-  @include col(10)
+  @include col(10);
 }
 .twelve {
-  @include col(12)
+  @include col(12);
 }
 
 
