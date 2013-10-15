@@ -46,7 +46,7 @@ p {
 
 }
 
-div {
+section {
   height: 6em;
   background: $green;
   @include increase-color($green, 70, .5%)
@@ -58,15 +58,17 @@ div {
 .cinco {
   @include col(3)
 }
-
 .one {
   @include col(1);
 }
 .two {
   @include col(2);
 
-  @include breakpoint(br-2) {
-    @include col(1, 50%);
+  &.first {
+    @include origin(positive, 2, 1);
+  }
+   &.second {
+    @include origin(negative, 2, 1);
   }
 }
 .three {
@@ -74,22 +76,6 @@ div {
 }
 .four {
   @include col(4);
-
-  
-  &.first {
-    background: cyan;
-    @include col(2);
-  }
-  &.second {
-    @include col(6);
-  }
-  &.third {
-    @include col(6);
-  }
-  &.fourth {
-    @include col(6);
-  }
-  
 }
 .five {
   @include col(5);
@@ -113,6 +99,10 @@ div {
   @include col(12);
 }
 
+
+.article, .module {
+  @include col(2, 0);
+}
 
 
 .lt-ie8 div {
