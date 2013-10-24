@@ -88,7 +88,7 @@ $totalColumnMargin: 0 $columnGutter $columnMarginBottom $columnGutter;/*Column m
 
 /*Mixin for columns*/
 
-@mixin col($columns, $margin: $columnMargin, $setUp: 'column-level') {
+@mixin col($columns, $margin: $columnMargin, $customWidth: '$x', $setUp: 'column-level') {
   
   @if $setUp == grid-level {
       @include columnSetUp(grid-level);
@@ -105,6 +105,10 @@ $totalColumnMargin: 0 $columnGutter $columnMarginBottom $columnGutter;/*Column m
       width: $width/$i - $margin;
   }
 
+  @else if $customWidth == $x {
+      width: $width/$i - $customWidth;
+  }
+
   @for $i from 1 through $totalColumns {
     @if $columns == $i {
       position: relative;
@@ -112,6 +116,30 @@ $totalColumnMargin: 0 $columnGutter $columnMarginBottom $columnGutter;/*Column m
       margin: 0 $margin/2 $columnMarginBottom $margin/2;
     }
   }
+}
+
+@mixin col-custom($columns: '$columns', $margin: $columnMargin, $setUp: 'column-level') {
+  
+  @if $setUp == grid-level {
+      @include columnSetUp(grid-level);
+  }
+  @else if $setUp == column-level {
+      @include columnSetUp(column-level);
+  }
+  
+  @else if $setUp == grid-level-opera {
+      @include columnSetUp(grid-level-opera);
+  }
+  
+  @else if $margin == $columnMargin {
+      width: $width/$i - $margin;
+  }
+ 
+  @if $columns == $columns {
+    width: $columns - $margin;
+    position: relative;
+    margin: 0 $margin/2 $columnMarginBottom $margin/2;
+  } 
 }
 
 
@@ -131,6 +159,20 @@ $totalColumnMargin: 0 $columnGutter $columnMarginBottom $columnGutter;/*Column m
       left: #{$direction}#{$origin-index*$columnsInRow};
     }
   } 
+}
+
+
+@mixin origin-col-custom($direction: 'positive', $position: '$position') {
+  
+  @if $direction == positive {
+      $direction: #{'+'};
+  }
+  @else if $direction == negative {
+      $direction: #{'-'};
+  }
+
+  left: #{$direction}#{$position};
+
 }
 
 

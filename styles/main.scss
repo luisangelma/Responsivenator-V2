@@ -5,7 +5,13 @@
 /*Colors*/
 
 $green: #3cd27b;
-$blue: #3498db;
+$blue: #3598DC;
+$red: darken(#DB2A20, 7.5%);
+
+body {
+  // background: darken(#201A23, 1%);
+  // background: darken(#272E36, 4%);
+}
 
 
 @mixin breakpoint($point) {
@@ -37,80 +43,28 @@ $blue: #3498db;
   margin: 100px auto;
 }
 
-p {
-  text-align: center;
-  color: #fff;
-  font-family: helvetica;
-  font-size: 2em;
-  line-height: 1em;
-
+.module {
+  @include col(4);
+  background: $red;
+  height: 200px;
 }
 
 section {
-  height: 6em;
   background: $green;
-  @include increase-color($green, 70, .5%)
-}
+  height: 6em;
 
-.siete {
-  @include col(7);
-}
-.cinco {
-  @include col(3)
-}
-.one {
-  @include col(1);
-}
-.two {
-  @include col(2);
-
-  &.first {
-    @include origin(positive, 2, 1);
+  &.one {
+    background: cyan;
+    z-index: 50;
+    position: relative;
+    @include col-custom(25%);
+    @include origin-col-custom(positive, 75%);
   }
-   &.second {
-    @include origin(negative, 2, 1);
+  &.two {
+    background: yellow;
+    @include col-custom(75%);
+    @include origin-col-custom(negative, 25%);
+    z-index: 50;
+    position: relative;
   }
-}
-.three {
-  @include col(3);
-}
-.four {
-  @include col(4);
-}
-.five {
-  @include col(5);
-}
-.six {
-  @include col(6);
-}
-.seven {
-  @include col(7);
-}
-.eight {
-  @include col(8);
-}
-.nine {
-  @include col(9);
-}
-.ten {
-  @include col(10);
-}
-.twelve {
-  @include col(12);
-}
-
-
-.article, .module {
-  @include col(2, 0);
-}
-
-
-.lt-ie8 div {
-  *display: inline;
-  zoom: 1;
-}
-
-.lt-ie8 .wrapper {
-  width: 960px;
-  max-width: 960px;
 }
