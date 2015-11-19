@@ -1,0 +1,57 @@
+
+
+// Global
+@import "_grid";
+
+.grid {
+  @include grid;
+}
+
+// Loop that builds the column classes
+
+@for $i from 1 through $totalColumns {
+  .col-#{$i} {
+    @include col($i);
+  }
+}
+
+// Custom column widths
+
+.col-70 {
+  @include col-custom(70%);
+}
+
+.col-60 {
+  @include col-custom(60%);
+}
+
+.col-50 {
+  @include col-custom(50%);
+}
+
+.col-40 {
+  @include col-custom(40%);
+}
+
+.col-30 {
+  @include col-custom(30%);
+}
+
+.col-25 {
+  @include col-custom(25%);
+}
+
+section {
+  width: 100%;
+  display: block;
+  height: 100px;
+  background: #3598DC;
+
+  p {
+    font-family: 'arial', sans-serif;
+    font-size: 2em;
+    padding: 30px 0 0 0;
+    color: #fff;
+    text-align: center;
+  }
+}
